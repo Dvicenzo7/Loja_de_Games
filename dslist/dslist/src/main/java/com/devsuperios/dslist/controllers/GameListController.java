@@ -1,8 +1,8 @@
 package com.devsuperios.dslist.controllers;
 
-import com.devsuperios.dslist.dto.GameDTO;
+import com.devsuperios.dslist.dto.GameListDTO;
 import com.devsuperios.dslist.dto.GameMinDTO;
-import com.devsuperios.dslist.entities.Game;
+import com.devsuperios.dslist.services.GameListService;
 import com.devsuperios.dslist.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,21 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/games") //TODO para colocar na url
-public class GameController {
+@RequestMapping(value = "/lists")
+public class GameListController {
 
-    @Autowired
-    GameService gameService;
+    @Autowired private GameListService gameListService;
+    @Autowired private GameService gameService;
 
     @GetMapping
-    public List<GameMinDTO> findAll(){
-        List<GameMinDTO> result = gameService.findall();
+    public List<GameListDTO> findAll(){
+        List<GameListDTO> result = gameListService.findall();
         return result;
     }
 
-    @GetMapping(value = "/{id}")
-    public GameDTO findByid(@PathVariable Long id){
-        GameDTO result = gameService.findByid(id);
+    @GetMapping(value = "/{listId}/games")
+    public List<GameMinDTO> findByList(@PathVariable Long listId){
+        List<GameMinDTO> result = gameService.findByList(listId);
         return result;
     }
 }
